@@ -1,5 +1,7 @@
 package entity;
 
+import java.util.Set;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -7,96 +9,116 @@ import org.json.JSONObject;
 public class Job {
 	private String jobId;
 	private String platform;
-	private String title;
+	private String jobTitle;
 	private String company;
 	private String url;
 	private String location;
 	private String category;
 	
-	public static class ItemBuilder {
-		private String jobId;
-		private String platform;
-		private String title;
-		private String company;
-		private String url;
-		private String location;
-		private String category;
-		
-		public void setJobId(String jobId) {
-			this.jobId = jobId;
-		}
-		public void setPlatform(String platform) {
-			this.platform = platform;
-		}
-		public void setTitle(String title) {
-			this.title = title;
-		}
-		public void setCompany(String company) {
-			this.company = company;
-		}
-		public void setUrl(String url) {
-			this.url = url;
-		}
-		public void setLocation(String location) {
-			this.location = location;
-		}
-		public void setCategory(String category) {
-			this.category = category;
-		}
-		
-		public Job build() {
-			return new Job(this);
-		}
-		
-	}
 	
-	private Job(ItemBuilder builder) {
+	
+	private Job(JobBuilder builder) {
 		this.jobId = builder.jobId;
 		this.platform = builder.platform;
-		this.title = builder.title;
+		this.jobTitle = builder.jobTitle;
 		this.company = builder.company;
 		this.url = builder.url;
 		this.location = builder.location;
 		this.category = builder.category;
 		
+		
 	}
 	
+	public String getJobId() {
+		return jobId;
+	}
+
+
+	public String getPlatform() {
+		return platform;
+	}
+
+
+	public String getJobTitle() {
+		return jobTitle;
+	}
+
+
+	public String getCompany() {
+		return company;
+	}
+
+
+	public String getUrl() {
+		return url;
+	}
+
+
+	public String getLocation() {
+		return location;
+	}
+	
+	public String getCategory() {
+		return category;
+	}
+
 	public JSONObject toJSONObject() {
 		JSONObject obj = new JSONObject();
 		try {
-			obj.put("job_id", this.jobId)
-				.put("platform", this.platform)
-				.put("title", this.title)
-				.put("company", this.company)
-				.put("url", this.url)
-				.put("location", this.location)
-				.put("category", this.category);
-		} catch(JSONException e) {
+			obj.put("jobId", jobId);
+			obj.put("platform", platform);
+			obj.put("job_title", jobTitle);
+			obj.put("company", company);
+			obj.put("url", url);
+			obj.put("location", location);
+			obj.put("category", category);
+		} catch (JSONException e) {
 			e.printStackTrace();
 		}
 		return obj;
 	}
 	
-	public String getJobId() {
-		return this.jobId;
+	public static class JobBuilder{
+		private String jobId;
+		private String platform;
+		private String jobTitle;
+		private String company;
+		private String url;
+		private String location;
+		private String category;
+
+		public void setJobId(String jobId) {
+			this.jobId = jobId;
+		}
+
+		public void setPlatform(String platform) {
+			this.platform = platform;
+		}
+
+		public void setJobTitle(String job_title) {
+			this.jobTitle = job_title;
+		}
+
+		public void setCompany(String company) {
+			this.company = company;
+		}
+		
+		public void setUrl(String url) {
+			this.url = url;
+		}
+		
+		public void setLocation(String location) {
+			this.location = location;
+		}
+		
+		public void setCategory(String category) {
+			this.category = category;
+		}
+
+		public Job build() {
+			return new Job(this);
+		}	
 	}
-	public String getPlatform() {
-		return this.platform;
-	}
-	public String getTitle() {
-		return this.title;
-	}
-	public String getCompany() {
-		return this.company;
-	}
-	public String getUrl() {
-		return this.url;
-	}
-	public String getLocation() {
-		return this.location;
-	}
-	public String getCategory() {
-		return this.category;
-	}
-	
+
+
 }

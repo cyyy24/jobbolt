@@ -271,7 +271,7 @@ public class GlassdoorTest {
                 "squareLogo": "https://media.glassdoor.com/sqll/40772/facebook-squarelogo-1381810479272.png",
                 "isHot": false,
                 "sgocId": 0
-            },　
+            },銆�
             {
                 "jobCategory": 0,
                 "partnerJobViewUrlParams": "pos=102&ao=456593&s=233&guid=1234567890abcdef1234567890abcdef&src=GD_JOB_VIEW&pao=3410&t=API&extid=14&exst=EOL&ist=&ast=EOL&vt=n&slr=false&cs=1_763e2a12&cb=1550882735248&jobListingId=2992175474",

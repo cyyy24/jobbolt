@@ -4,7 +4,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import entity.Job;
-import entity.Job.ItemBuilder;
+import entity.Job.JobBuilder;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -77,6 +77,7 @@ public class GlassdoorAPI implements JobSearch {
 		List<Job> result = new ArrayList<>();
 		
 		// keyword MUST be NOT NULL
+		
 		if (keyword == null || keyword.length() == 0) {
 			System.out.println("keyword cannot be null!");
 			return result;
@@ -183,7 +184,7 @@ public class GlassdoorAPI implements JobSearch {
 				if (!resp.isNull("jobListings")) {
 					JSONArray jobs = resp.getJSONArray("jobListings");
 					for (int i = 0; i < jobs.length(); i++) {
-						ItemBuilder builder = new ItemBuilder();
+						JobBuilder builder = new JobBuilder();
 						JSONObject job = jobs.getJSONObject(i);
 						if (!job.isNull("jobListingId")) {
 							String jobId = String.valueOf(job.getInt("jobListingId"));
@@ -192,7 +193,7 @@ public class GlassdoorAPI implements JobSearch {
 						builder.setPlatform(this.platformString);
 						
 						if (!job.isNull("jobTitle")) {
-							builder.setTitle(job.getString("jobTitle"));
+							builder.setJobTitle(job.getString("jobTitle"));
 						}
 						if (!job.isNull("employer") && !job.getJSONObject("employer").isNull("name")) {
 							String company = job.getJSONObject("employer").getString("name");
