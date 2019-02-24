@@ -29,7 +29,7 @@ public class MySQLTableReset {
 			sql = "CREATE TABLE jobs ("
 					+ "job_id VARCHAR(255) NOT NULL,"
 					+ "platform VARCHAR(255),"
-					+ "title VARCHAR(255),"
+					+ "job_title VARCHAR(255),"
 					+ "company VARCHAR(255),"
 					+ "url VARCHAR(255),"
 					+ "location VARCHAR(255),"

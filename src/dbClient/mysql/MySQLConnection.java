@@ -6,7 +6,7 @@ import java.sql.PreparedStatement;
 import java.util.List;
 
 import dbClient.DBConnection;
-import entity.Item;
+import entity.Job;
 import jobClient.glassdoorAPI.GlassdoorAPI;
 
 
@@ -39,17 +39,17 @@ public class MySQLConnection implements DBConnection {
 	}
 
 	@Override
-	public List<Item> searchItem(String location, String keyword, String company) {
+	public List<Job> searchItem(String location, String keyword, String company) {
 		GlassdoorAPI ga = new GlassdoorAPI();
-		List<Item> results = ga.search(location, keyword, company);
-		for (Item item : results) {
+		List<Job> results = ga.search(location, keyword, company);
+		for (Job item : results) {
 			saveItem(item);
 		}
 		return results;
 	}
 
 	@Override
-	public void saveItem(Item item) {
+	public void saveItem(Job item) {
 		if (conn == null) {
 			System.err.println("DB connction failed");
 			return;

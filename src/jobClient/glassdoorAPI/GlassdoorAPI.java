@@ -3,8 +3,8 @@ package jobClient.glassdoorAPI;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import entity.Item;
-import entity.Item.ItemBuilder;
+import entity.Job;
+import entity.Job.ItemBuilder;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -39,8 +39,8 @@ public class GlassdoorAPI implements JobSearch {
 	private static String action = "jobs"; 
 	private static String userAgent = "Mozilla/%2F4.0";
 	private int totalPageCount = Integer.MIN_VALUE;
-	private static String platformPrefix = "gd_";
 	private static String companyRootUrl = "https://www.glassdoor.com";
+	private static String platformString = "glassdoor";
 	
 	private String getIPAddress(String location) {
 		String ip = "0.0.0.0"; // Los Angeles
@@ -68,13 +68,19 @@ public class GlassdoorAPI implements JobSearch {
 	}
 	
 	@Override
-	public List<Item> search(String location, String keyword, String company) {
+	public List<Job> search(String location, String keyword, String company) {
 		
 		// keyword -> title
 		// location -> city
 		// company -> employer
 		
-		List<Item> result = new ArrayList<>();
+		List<Job> result = new ArrayList<>();
+		
+		// keyword MUST be NOT NULL
+		if (keyword == null || keyword.length() == 0) {
+			System.out.println("keyword cannot be null!");
+			return result;
+		}
 		
 		// eliminate space
 		location = dropSpace(location);
@@ -86,10 +92,23 @@ public class GlassdoorAPI implements JobSearch {
 		// http://api.glassdoor.com/api/api.htm?t.p=55571&t.k=dq1mX87IgI&v=1&userip=0.0.0.0
 		// &format=json&action=jobs&countryId=1&city=san+jose
 		// &employer=facebook&jobTitle=software+engineer+intern&p=1
-		String query = String.format("t.p=%s&t.k=%s&v=1&userip=%s&format=%s&action=%s&countryId=1&city="
-								+ "%s&employer=%s&jobTitle=%s&p=%s",
-								partnerId, partnerKey, ipAddress, format, action, location, 
-								company, keyword, currentPage);
+		String query = String.format("t.p=%s&t.k=%s&v=1&userip=%s&format=%s&action=%s&countryId=1&p=%s",
+								partnerId, partnerKey, ipAddress, format, action, currentPage 
+								);
+		String locationQuery = "";
+		String keywordQuery = "";
+		String companyQuery = "";
+		if (location != null) {
+			locationQuery = String.format("&city=%s", location);
+		}
+		if (keyword != null) {
+			keywordQuery = String.format("&jobTitle=%s", keyword);
+		}
+		if (companyQuery != null) {
+			companyQuery = String.format("&employer=%s", company);
+		}
+		query = query + locationQuery + keywordQuery + companyQuery;
+		
 		
 		String fullUrl = url + "?" + query;
 		System.out.println("url = " + fullUrl);
@@ -107,10 +126,12 @@ public class GlassdoorAPI implements JobSearch {
 			
 			// read the 1st page
 			readItems(connection, result);
-			// if total page num is larger than 1, then continue send requests to get new page results
+			
+			// if total page num is larger than 1 and smaller than 20,
+			// then continue send requests to get continuing page results, page2, page3, page4 ....
 			if (this.totalPageCount > 1) {
 				int currentPageCount = 2;
-				while (currentPageCount <= this.totalPageCount) {
+				while (currentPageCount <= this.totalPageCount && currentPageCount <= 20) {
 					query = String.format("t.p=%s&t.k=%s&v=1&userip=%s&format=%s&action=%s&countryId=1&city="
 							+ "%s&employer=%s&jobTitle=%s&p=%s",
 							partnerId, partnerKey, ipAddress, format, action, location, 
@@ -136,7 +157,7 @@ public class GlassdoorAPI implements JobSearch {
 		return result;
 	}
 	
-	private void readItems(HttpURLConnection connection, List<Item> result) {
+	private void readItems(HttpURLConnection connection, List<Job> result) {
 		
 		try {
 			BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
@@ -144,6 +165,11 @@ public class GlassdoorAPI implements JobSearch {
 			StringBuilder response = new StringBuilder();
 			while ((line = reader.readLine()) != null) {
 				response.append(line);
+			}
+			
+			if (response.length() == 0) {
+				System.out.println("response is empty");
+				return;
 			}
 			
 			JSONObject obj = new JSONObject(response.toString());
@@ -160,15 +186,15 @@ public class GlassdoorAPI implements JobSearch {
 						ItemBuilder builder = new ItemBuilder();
 						JSONObject job = jobs.getJSONObject(i);
 						if (!job.isNull("jobListingId")) {
-							String jobId = this.platformPrefix + String.valueOf(job.getInt("jobListingId"));
+							String jobId = String.valueOf(job.getInt("jobListingId"));
 							builder.setJobId(jobId);
 						}
-						builder.setPlatform("glassdoor");
+						builder.setPlatform(this.platformString);
 						
 						if (!job.isNull("jobTitle")) {
 							builder.setTitle(job.getString("jobTitle"));
 						}
-						if (!job.isNull("employer") && job.getJSONObject("employer").isNull("name")) {
+						if (!job.isNull("employer") && !job.getJSONObject("employer").isNull("name")) {
 							String company = job.getJSONObject("employer").getString("name");
 							builder.setCompany(company);
 						}

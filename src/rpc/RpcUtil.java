@@ -16,8 +16,12 @@ public class RpcUtil {
 		response.setHeader("Access-Control-Allow-Origin", "*"); // set access permission origin list
 		PrintWriter writer = response.getWriter();
 		
-//		writer.write("hello world");
-		writer.print(array);
+		try {
+			writer.print(array.toString(4));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 		writer.close();
 	}
 	
@@ -26,7 +30,12 @@ public class RpcUtil {
 		response.setHeader("Access-Control-Allow-Origin", "*"); // set access permission origin list, "*" means no limit
 		PrintWriter writer = response.getWriter();
 		
-		writer.print(obj);
+		try {
+			writer.print(obj.toString(4));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 		writer.close();
 	}
 	

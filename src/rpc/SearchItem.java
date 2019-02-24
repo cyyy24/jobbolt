@@ -14,7 +14,7 @@ import org.json.JSONArray;
 
 import dbClient.DBConnection;
 import dbClient.mysql.MySQLConnection;
-import entity.Item;
+import entity.Job;
 
 /**
  * Servlet implementation class SearchItem
@@ -41,9 +41,9 @@ public class SearchItem extends HttpServlet {
 		String company = request.getParameter("company");
 		
 		DBConnection conn = new MySQLConnection();
-		List<Item> results = conn.searchItem(location, jobTitle, company);
+		List<Job> results = conn.searchItem(location, jobTitle, company);
 		JSONArray array = new JSONArray();
-		for (Item item : results) {
+		for (Job item : results) {
 			array.put(item.toJSONObject());
 		}
 		

@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.json.JSONObject;
 
-import entity.Item;
+import entity.Job;
 import jobClient.glassdoorAPI.GlassdoorAPI;
 
 
@@ -14,7 +14,7 @@ public class GlassdoorTest {
 	
 	public static void main(String[] args) {
 		GlassdoorAPI ga = new GlassdoorAPI();
-		List<Item> results = ga.search("new york", " Software  Engineer", "Facebook");
+		List<Job> results = ga.search("new york", "Software Engineer", "Facebook");
 		try {
 			System.out.println("find " + results.size() + " job results!");
 		} catch(Exception e) {
@@ -23,8 +23,196 @@ public class GlassdoorTest {
 	}
 }
 
+// Usage in backend: 
 // JSONObject result = ga.search("new york", " Software  Engineer", "Facebook");
-// query result: 
+
+// Usage in browser/postman, GET request
+// example: GET http://localhost:8080/YourJobs/search?location=new%20york&keyword=software%20engineer&company=facebook
+
+// result
+/*
+ * [
+    {
+        "job_id": "-1302791822",
+        "company": "Facebook",
+        "location": "New York, NY",
+        "title": "Instagram Software Engineer, Android",
+        "category": "glassdoor category 0",
+        "platform": "glassdoor",
+        "url": "https://www.glassdoor.com/partner/jobListing.htm?pos=101&ao=456593&s=233&guid=1234567890abcdef1234567890abcdef&src=API_NETWORK&pao=3410&t=API&extid=14&exst=EOL&ist=&ast=EOL&vt=w&slr=false&cs=1_1745a6e5&cb=1550991971494&jobListingId=2992175474&ugo=cdb872e8-da4c-445d-9507-b69e31eec111"
+    },
+    {
+        "job_id": "-1302791830",
+        "company": "Facebook",
+        "location": "New York, NY",
+        "title": "Instagram - Software Engineer, Machine Learning",
+        "category": "glassdoor category 0",
+        "platform": "glassdoor",
+        "url": "https://www.glassdoor.com/partner/jobListing.htm?pos=102&ao=456593&s=233&guid=1234567890abcdef1234567890abcdef&src=API_NETWORK&pao=3410&t=API&extid=14&exst=EOL&ist=&ast=EOL&vt=w&slr=false&cs=1_33072756&cb=1550991971497&jobListingId=2992175466&ugo=cdb872e8-da4c-445d-9507-b69e31eec111"
+    },
+    {
+        "job_id": "-1302792438",
+        "company": "Facebook",
+        "location": "New York, NY",
+        "title": "Instagram - Software Engineer, iOS",
+        "category": "glassdoor category 0",
+        "platform": "glassdoor",
+        "url": "https://www.glassdoor.com/partner/jobListing.htm?pos=103&ao=456593&s=233&guid=1234567890abcdef1234567890abcdef&src=API_NETWORK&pao=3410&t=API&extid=14&exst=EOL&ist=&ast=EOL&vt=w&slr=false&cs=1_42f8ad52&cb=1550991971500&jobListingId=2992174858&ugo=cdb872e8-da4c-445d-9507-b69e31eec111"
+    },
+    {
+        "job_id": "-1302792426",
+        "company": "Facebook",
+        "location": "New York, NY",
+        "title": "Software Engineer, Infrastructure",
+        "category": "glassdoor category 0",
+        "platform": "glassdoor",
+        "url": "https://www.glassdoor.com/partner/jobListing.htm?pos=104&ao=132920&s=233&guid=1234567890abcdef1234567890abcdef&src=API_NETWORK&pao=3410&t=API&extid=14&exst=EOL&ist=&ast=EOL&vt=w&slr=false&cs=1_e35ed7d2&cb=1550991971502&jobListingId=2992174870&ugo=cdb872e8-da4c-445d-9507-b69e31eec111"
+    },
+    {
+        "job_id": "-1302807408",
+        "company": "Facebook",
+        "location": "New York, NY",
+        "title": "Instagram - Manager, Software Engineering",
+        "category": "glassdoor category 0",
+        "platform": "glassdoor",
+        "url": "https://www.glassdoor.com/partner/jobListing.htm?pos=105&ao=4120&s=233&guid=1234567890abcdef1234567890abcdef&src=API_NETWORK&pao=3410&t=API&extid=14&exst=EOL&ist=&ast=EOL&vt=w&slr=false&cs=1_94372ff3&cb=1550991971505&jobListingId=2992159888&ugo=cdb872e8-da4c-445d-9507-b69e31eec111"
+    },
+    {
+        "job_id": "-1302792457",
+        "company": "Facebook",
+        "location": "New York, NY",
+        "title": "Manager, Software Engineering - Machine Learning",
+        "category": "glassdoor category 0",
+        "platform": "glassdoor",
+        "url": "https://www.glassdoor.com/partner/jobListing.htm?pos=106&ao=132920&s=233&guid=1234567890abcdef1234567890abcdef&src=API_NETWORK&pao=3410&t=API&extid=14&exst=EOL&ist=&ast=EOL&vt=w&slr=false&cs=1_ed2ae82d&cb=1550991971508&jobListingId=2992174839&ugo=cdb872e8-da4c-445d-9507-b69e31eec111"
+    },
+    {
+        "job_id": "-1176850172",
+        "company": "Facebook",
+        "location": "New York, NY",
+        "title": "Manager, Software Engineering - Customer Insights",
+        "category": "glassdoor category 0",
+        "platform": "glassdoor",
+        "url": "https://www.glassdoor.com/partner/jobListing.htm?pos=107&ao=132920&s=233&guid=1234567890abcdef1234567890abcdef&src=API_NETWORK&pao=3410&t=API&extid=14&exst=EOL&ist=&ast=EOL&vt=w&slr=false&cs=1_5da52d2b&cb=1550991971511&jobListingId=3118117124&ugo=cdb872e8-da4c-445d-9507-b69e31eec111"
+    },
+    {
+        "job_id": "-1302797180",
+        "company": "Facebook",
+        "location": "New York, NY",
+        "title": "Software Engineer, Web Performance",
+        "category": "glassdoor category 0",
+        "platform": "glassdoor",
+        "url": "https://www.glassdoor.com/partner/jobListing.htm?pos=108&ao=132920&s=233&guid=1234567890abcdef1234567890abcdef&src=API_NETWORK&pao=3410&t=API&extid=14&exst=EOL&ist=&ast=EOL&vt=w&slr=false&cs=1_f2b55982&cb=1550991971513&jobListingId=2992170116&ugo=cdb872e8-da4c-445d-9507-b69e31eec111"
+    },
+    {
+        "job_id": "-1302797359",
+        "company": "Facebook",
+        "location": "New York, NY",
+        "title": "Software Engineer, iOS",
+        "category": "glassdoor category 0",
+        "platform": "glassdoor",
+        "url": "https://www.glassdoor.com/partner/jobListing.htm?pos=109&ao=132920&s=233&guid=1234567890abcdef1234567890abcdef&src=API_NETWORK&pao=3410&t=API&extid=14&exst=EOL&ist=&ast=EOL&vt=w&slr=false&cs=1_4a452528&cb=1550991971516&jobListingId=2992169937&ugo=cdb872e8-da4c-445d-9507-b69e31eec111"
+    },
+    {
+        "job_id": "-1302791599",
+        "company": "Facebook",
+        "location": "New York, NY",
+        "title": "Manager, Software Engineering - Product Generalist",
+        "category": "glassdoor category 0",
+        "platform": "glassdoor",
+        "url": "https://www.glassdoor.com/partner/jobListing.htm?pos=110&ao=132920&s=233&guid=1234567890abcdef1234567890abcdef&src=API_NETWORK&pao=3410&t=API&extid=14&exst=EOL&ist=&ast=EOL&vt=w&slr=false&cs=1_18066974&cb=1550991971522&jobListingId=2992175697&ugo=cdb872e8-da4c-445d-9507-b69e31eec111"
+    },
+    {
+        "job_id": "-1302795077",
+        "company": "Facebook",
+        "location": "New York, NY",
+        "title": "Manager, Software Engineering - Infrastructure",
+        "category": "glassdoor category 0",
+        "platform": "glassdoor",
+        "url": "https://www.glassdoor.com/partner/jobListing.htm?pos=201&ao=132920&s=233&guid=1234567890abcdef1234567890abcdef&src=API_NETWORK&pao=3410&t=API&extid=14&exst=EOL&ist=&ast=EOL&vt=w&slr=false&cs=1_e0d26692&cb=1550991971828&jobListingId=2992172219&ugo=c0297eeb-88a9-4b7a-8a2e-b782dd647f28"
+    },
+    {
+        "job_id": "-1302791793",
+        "company": "Facebook",
+        "location": "New York, NY",
+        "title": "Software Engineer, Android",
+        "category": "glassdoor category 0",
+        "platform": "glassdoor",
+        "url": "https://www.glassdoor.com/partner/jobListing.htm?pos=202&ao=132920&s=233&guid=1234567890abcdef1234567890abcdef&src=API_NETWORK&pao=3410&t=API&extid=14&exst=EOL&ist=&ast=EOL&vt=w&slr=false&cs=1_ae30ef91&cb=1550991971831&jobListingId=2992175503&ugo=c0297eeb-88a9-4b7a-8a2e-b782dd647f28"
+    },
+    {
+        "job_id": "-1302786328",
+        "company": "Facebook",
+        "location": "New York, NY",
+        "title": "Software Engineer, Product (Full Stack)",
+        "category": "glassdoor category 0",
+        "platform": "glassdoor",
+        "url": "https://www.glassdoor.com/partner/jobListing.htm?pos=203&ao=132920&s=233&guid=1234567890abcdef1234567890abcdef&src=API_NETWORK&pao=3410&t=API&extid=14&exst=EOL&ist=&ast=EOL&vt=w&slr=false&cs=1_6791ad29&cb=1550991971834&jobListingId=2992180968&ugo=c0297eeb-88a9-4b7a-8a2e-b782dd647f28"
+    },
+    {
+        "job_id": "-1302784637",
+        "company": "Facebook",
+        "location": "New York, NY",
+        "title": "Software Engineer, Machine Learning",
+        "category": "glassdoor category 0",
+        "platform": "glassdoor",
+        "url": "https://www.glassdoor.com/partner/jobListing.htm?pos=204&ao=132920&s=233&guid=1234567890abcdef1234567890abcdef&src=API_NETWORK&pao=3410&t=API&extid=14&exst=EOL&ist=&ast=EOL&vt=w&slr=false&cs=1_b295588c&cb=1550991971836&jobListingId=2992182659&ugo=c0297eeb-88a9-4b7a-8a2e-b782dd647f28"
+    },
+    {
+        "job_id": "-1302781378",
+        "company": "Facebook",
+        "location": "New York, NY",
+        "title": "Data Engineering Manager, Analytics",
+        "category": "glassdoor category 0",
+        "platform": "glassdoor",
+        "url": "https://www.glassdoor.com/partner/jobListing.htm?pos=205&ao=132920&s=233&guid=1234567890abcdef1234567890abcdef&src=API_NETWORK&pao=3410&t=API&extid=14&exst=EOL&ist=&ast=EOL&vt=w&slr=false&cs=1_5535adb0&cb=1550991971839&jobListingId=2992185918&ugo=c0297eeb-88a9-4b7a-8a2e-b782dd647f28"
+    },
+    {
+        "job_id": "-1302796839",
+        "company": "Facebook",
+        "location": "New York, NY",
+        "title": "Manager, Production Engineering",
+        "category": "glassdoor category 0",
+        "platform": "glassdoor",
+        "url": "https://www.glassdoor.com/partner/jobListing.htm?pos=206&ao=132920&s=233&guid=1234567890abcdef1234567890abcdef&src=API_NETWORK&pao=3410&t=API&extid=14&exst=EOL&ist=&ast=EOL&vt=w&slr=false&cs=1_639b94dd&cb=1550991971842&jobListingId=2992170457&ugo=c0297eeb-88a9-4b7a-8a2e-b782dd647f28"
+    },
+    {
+        "job_id": "-1198947570",
+        "company": "Facebook",
+        "location": "New York, NY",
+        "title": "Production Engineer",
+        "category": "glassdoor category 0",
+        "platform": "glassdoor",
+        "url": "https://www.glassdoor.com/partner/jobListing.htm?pos=207&ao=132920&s=233&guid=1234567890abcdef1234567890abcdef&src=API_NETWORK&pao=3410&t=API&extid=14&exst=EOL&ist=&ast=EOL&vt=w&slr=false&cs=1_7ea8910b&cb=1550991971845&jobListingId=3096019726&ugo=c0297eeb-88a9-4b7a-8a2e-b782dd647f28"
+    },
+    {
+        "job_id": "-1302791766",
+        "company": "Facebook",
+        "location": "New York, NY",
+        "title": "Applied Research Scientist, Core Machine Learning",
+        "category": "glassdoor category 0",
+        "platform": "glassdoor",
+        "url": "https://www.glassdoor.com/partner/jobListing.htm?pos=208&ao=132920&s=233&guid=1234567890abcdef1234567890abcdef&src=API_NETWORK&pao=3410&t=API&extid=14&exst=EOL&ist=&ast=EOL&vt=w&slr=false&cs=1_fb70f0e3&cb=1550991971847&jobListingId=2992175530&ugo=c0297eeb-88a9-4b7a-8a2e-b782dd647f28"
+    },
+    {
+        "job_id": "-1265327699",
+        "company": "Facebook",
+        "location": "New York, NY",
+        "title": "Partner Engineer, Media Partnerships",
+        "category": "glassdoor category 0",
+        "platform": "glassdoor",
+        "url": "https://www.glassdoor.com/partner/jobListing.htm?pos=209&ao=132920&s=233&guid=1234567890abcdef1234567890abcdef&src=API_NETWORK&pao=3410&t=API&extid=14&exst=EOL&ist=&ast=EOL&vt=w&slr=false&cs=1_4e466fed&cb=1550991971850&jobListingId=3029639597&ugo=c0297eeb-88a9-4b7a-8a2e-b782dd647f28"
+    }
+]
+]*/
+
+
+
+
+
+//
+// Glassdoor GET request result:
+//
 
 /*
  * {

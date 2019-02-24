@@ -4,7 +4,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Item {
+public class Job {
 	private String jobId;
 	private String platform;
 	private String title;
@@ -44,13 +44,13 @@ public class Item {
 			this.category = category;
 		}
 		
-		public Item build() {
-			return new Item(this);
+		public Job build() {
+			return new Job(this);
 		}
 		
 	}
 	
-	private Item(ItemBuilder builder) {
+	private Job(ItemBuilder builder) {
 		this.jobId = builder.jobId;
 		this.platform = builder.platform;
 		this.title = builder.title;
