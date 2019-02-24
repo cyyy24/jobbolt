@@ -16,6 +16,7 @@ import org.json.JSONObject;
 
 import db.DBConnection;
 import db.DBConnectionFactory;
+import db.mysql.MySQLConnection;
 import entity.Job;
 
 /**
@@ -38,41 +39,25 @@ public class SearchJob extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		String location = request.getParameter("location");
+		String jobTitle = request.getParameter("keyword");
+		String company = request.getParameter("company");
 		
+		DBConnection conn = new MySQLConnection();
+		List<Job> results = conn.searchJobs(location, jobTitle, company);
+		JSONArray array = new JSONArray();
+		for (Job item : results) {
+			array.put(item.toJSONObject());
+		}
+		
+		RpcUtil.writeJSONArray(response, array);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		HttpSession session = request.getSession();
-		if(session == null) {
-			response.setStatus(403);
-			return;
-		}
-		DBConnection conn = DBConnectionFactory.getConnection();
-	   	 try {
-	   		 JSONObject input = rpcHelper.readJSONObject(request);
-	   		 
-	   		String location = input.getString("location");
-			String jobTitle = input.getString("keyword");
-			String company = input.getString("company");
-			List<Job> results = conn.searchJobs(location, jobTitle, company);
-			JSONArray array = new JSONArray();
-			for (Job job : results) {
-				array.put(job.toJSONObject());
-			}
-	   		 
-			rpcHelper.writeJsonArray(response, array); 
-	   		 
-	   		
-	   	 } catch (Exception e) {
-	   		 e.printStackTrace();
-	   	 } finally {
-	   		 conn.close();
-	   	 }
+		doGet(request, response);
 	}
 
 }

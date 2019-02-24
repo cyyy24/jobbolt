@@ -396,9 +396,11 @@ public class MySQLConnection implements DBConnection {
 		
 		GlassdoorAPI ga = new GlassdoorAPI();
 		List<Job> results = ga.search(location, keyword, company);
+		System.out.println("Searching!!! Found " + results.size() + " jobs!");
 		for (Job job : results) {
 			saveJob(job);
 		}
+		
 		return results;
 	}
 	
@@ -430,7 +432,6 @@ public class MySQLConnection implements DBConnection {
 				ps.setString(2, job.getJobTitle());
 				ps.execute();
 				*/
-
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
