@@ -42,6 +42,8 @@ public class GlassdoorAPI implements JobSearch {
 	private static String companyRootUrl = "https://www.glassdoor.com";
 	private static String platformString = "glassdoor";
 	
+	private static int limitPageNum = 2;
+	
 	private String getIPAddress(String location) {
 		String ip = "0.0.0.0"; // Los Angeles
 		return ip;
@@ -132,7 +134,7 @@ public class GlassdoorAPI implements JobSearch {
 			// then continue send requests to get continuing page results, page2, page3, page4 ....
 			if (this.totalPageCount > 1) {
 				int currentPageCount = 2;
-				while (currentPageCount <= this.totalPageCount && currentPageCount <= 20) {
+				while (currentPageCount <= this.totalPageCount && currentPageCount <= this.limitPageNum) {
 					query = String.format("t.p=%s&t.k=%s&v=1&userip=%s&format=%s&action=%s&countryId=1&city="
 							+ "%s&employer=%s&jobTitle=%s&p=%s",
 							partnerId, partnerKey, ipAddress, format, action, location, 
