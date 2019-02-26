@@ -17,6 +17,8 @@ import jobClient.glassdoorAPI.GlassdoorAPI;
 public class MySQLConnection implements DBConnection {
 
 	private Connection conn;
+	private static boolean saveToTableJobs = true;
+	private static boolean saveToTableCategories = true;
 
 	public MySQLConnection() {
 		try {
@@ -401,6 +403,13 @@ public class MySQLConnection implements DBConnection {
 			saveJob(job);
 		}
 		
+		if (this.saveToTableJobs) {
+			System.out.println("new records inserted into the table [jobs]");
+		}
+		if (this.saveToTableCategories) {
+			System.out.println("new records inserted into the table [categories]");
+		}
+		
 		return results;
 	}
 	
@@ -413,25 +422,35 @@ public class MySQLConnection implements DBConnection {
 				return;
 			}
 			try {
-				String sql = "INSERT IGNORE INTO jobs VALUES(?,?,?,?,?,?,?)";
-				PreparedStatement ps = conn.prepareStatement(sql);
-				ps.setString(1, job.getJobId());
-				ps.setString(2, job.getPlatform());
-				ps.setString(3, job.getJobTitle());
-				ps.setString(4, job.getCompany());
-				ps.setString(5, job.getUrl());
-				ps.setString(6, job.getLocation());
-				ps.setString(7, job.getCategory());
-				ps.execute();
+				String sql;
+				PreparedStatement ps;
+				// insert into table "jobs"
+				if (this.saveToTableJobs) {
+					sql = "INSERT IGNORE INTO jobs VALUES(?,?,?,?,?,?,?)";
+					ps = conn.prepareStatement(sql);
+					ps.setString(1, job.getJobId());
+					ps.setString(2, job.getPlatform());
+					ps.setString(3, job.getJobTitle());
+					ps.setString(4, job.getCompany());
+					ps.setString(5, job.getUrl());
+					ps.setString(6, job.getLocation());
+					ps.setString(7, job.getCategory());
+					ps.execute();
+				}
+				
+				if (this.saveToTableCategories) {
+					/*do this step is not decided,if recommendation need table of 
+					 * category, it need to be done
+					 * */
+					sql = "INSERT IGNORE INTO categories VALUES(?,?)";
+					ps = conn.prepareStatement(sql);
+					ps.setString(1, job.getJobId());
+					ps.setString(2, job.getJobTitle());
+					ps.execute();
+				}
 
-				/*do this step is not decided,if recommendation need table of 
-				 * category, it need to be done
-				 * sql = "INSERT IGNORE INTO categories VALUES(?,?)";
-				ps = conn.prepareStatement(sql);
-				ps.setString(1, job.getJobId());
-				ps.setString(2, job.getJobTitle());
-				ps.execute();
-				*/
+				
+				
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
