@@ -41,7 +41,7 @@ public class SavedJob extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession();
-		if(session == null) {
+		if (session == null) {
 			response.setStatus(403);
 			return;
 		}
@@ -52,7 +52,6 @@ public class SavedJob extends HttpServlet {
 		JSONArray array = new JSONArray();
 		
 		try {
-			
 			Set<Job> list = conn.getSavedJobs(userId);
 			for(Job job : list) {
 				JSONObject obj = job.toJSONObject();
@@ -62,10 +61,9 @@ public class SavedJob extends HttpServlet {
 			
 			rpcHelper.writeJsonArray(response, array);
 			
-			
-		}catch(JSONException e) {
+		} catch(JSONException e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
 			conn.close();
 		}
 	}
@@ -77,7 +75,7 @@ public class SavedJob extends HttpServlet {
 		// TODO Auto-generated method stub
 		 
 		HttpSession session = request.getSession();
-		if(session == null) {
+		if (session == null) {
 			response.setStatus(403);
 			return;
 		}
@@ -108,7 +106,7 @@ public class SavedJob extends HttpServlet {
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession();
-		if(session == null) {
+		if (session == null) {
 			response.setStatus(403);
 			return;
 		}
