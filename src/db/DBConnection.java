@@ -52,7 +52,7 @@ public interface DBConnection {
 	public void saveJob(Job job);
 	
 	//get categories (job title) of a given job id
-	public Set<String> getCategories(String jobId);
+	public String getJobTitle(String jobId);
 	
 	//get all job ids a user has either saved or submitted (for recommendation)
 	public Set<String> getAllJobIds(String userId);

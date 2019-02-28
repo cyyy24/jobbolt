@@ -461,27 +461,27 @@ public class MySQLConnection implements DBConnection {
 	}
 		
 	
-	// for the use of recommendation, get the jobtitle of given a jobId.
+	// for the use of recommendation, get the job title of given a jobId.
 	@Override
-	public Set<String> getCategories(String jobId) {
+	public String getJobTitle(String jobId) {
 		if (conn == null) {
 			return null;
 		}
-		Set<String> categories = new HashSet<>();
+		String jobTitle = "";
 		try {
 			String sql = "SELECT job_title from categories WHERE job_id = ? ";
 			PreparedStatement statement = conn.prepareStatement(sql);
 			statement.setString(1, jobId);
 			ResultSet rs = statement.executeQuery();
 			while (rs.next()) {
-				String category = rs.getString("category");
-				categories.add(category);
+				jobTitle = rs.getString("job_title");
+				
 			}
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}	
 		
-		return categories;
+		return jobTitle;
 	}
 		
 	
