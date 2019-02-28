@@ -40,6 +40,7 @@ public class MySQLTableCreation {
 					+ "url VARCHAR(255),"
 					+ "location VARCHAR(255),"
 					+ "category VARCHAR(255),"
+					+ "description VARCHAR(255),"
 					//+ "query VARCHAR(255),"
 					+ "PRIMARY KEY (job_id, platform)"
 					+ ")";
@@ -83,7 +84,7 @@ public class MySQLTableCreation {
 			sql = "INSERT INTO users VALUES('1111', '1234', '123@gmail.com','John', 'Smith')";
 			statement.executeUpdate(sql);
 			
-			sql = "INSERT INTO jobs VALUES('job1', 'google', 'java Developer', 'Google', 'http://jjjjkkkk', 'LA', 'c0')";
+			sql = "INSERT INTO jobs VALUES('job1', 'google', 'java Developer', 'Google', 'http://jjjjkkkk', 'LA', 'c0', 'description')";
 			statement.executeUpdate(sql);
 			
 			sql = "INSERT INTO history VALUES('1111', 'job1', true, 'Pending', CURRENT_TIMESTAMP)";

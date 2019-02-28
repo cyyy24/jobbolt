@@ -14,6 +14,7 @@ public class Job {
 	private String url;
 	private String location;
 	private String category;
+	private String description;
 	
 	
 	
@@ -25,6 +26,7 @@ public class Job {
 		this.url = builder.url;
 		this.location = builder.location;
 		this.category = builder.category;
+		this.description = builder.description;
 		
 		
 	}
@@ -61,6 +63,10 @@ public class Job {
 	public String getCategory() {
 		return category;
 	}
+	
+	public String getDescription() {
+		return description;
+	}
 
 	public JSONObject toJSONObject() {
 		JSONObject obj = new JSONObject();
@@ -72,6 +78,7 @@ public class Job {
 			obj.put("url", url);
 			obj.put("location", location);
 			obj.put("category", category);
+			obj.put("description", description);
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
@@ -86,6 +93,7 @@ public class Job {
 		private String url;
 		private String location;
 		private String category;
+		private String description;
 
 		public void setJobId(String jobId) {
 			this.jobId = jobId;
@@ -113,6 +121,10 @@ public class Job {
 		
 		public void setCategory(String category) {
 			this.category = category;
+		}
+		
+		public void setDescription(String description) {
+			this.description = description;
 		}
 
 		public Job build() {

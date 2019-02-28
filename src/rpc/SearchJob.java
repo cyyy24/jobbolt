@@ -39,11 +39,11 @@ public class SearchJob extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		HttpSession session = request.getSession(false);
-		if(session == null) {
-			response.setStatus(403);
-			return;
-		}
+//		HttpSession session = request.getSession(false);
+//		if(session == null) {
+//			response.setStatus(403);
+//			return;
+//		}
 		
 		String location = request.getParameter("location");
 		String jobTitle = request.getParameter("keyword");

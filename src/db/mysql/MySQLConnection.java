@@ -433,7 +433,7 @@ public class MySQLConnection implements DBConnection {
 			PreparedStatement ps;
 			// insert into table "jobs"
 			if (this.saveToTableJobs) {
-				sql = "INSERT IGNORE INTO jobs VALUES(?,?,?,?,?,?,?)";
+				sql = "INSERT IGNORE INTO jobs VALUES(?,?,?,?,?,?,?,?)";
 				ps = conn.prepareStatement(sql);
 				ps.setString(1, job.getJobId());
 				ps.setString(2, job.getPlatform());
@@ -442,6 +442,7 @@ public class MySQLConnection implements DBConnection {
 				ps.setString(5, job.getUrl());
 				ps.setString(6, job.getLocation());
 				ps.setString(7, job.getCategory());
+				ps.setString(8, job.getDescription());
 				ps.execute();
 			}
 				

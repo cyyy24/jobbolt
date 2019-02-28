@@ -95,6 +95,7 @@ public class GlassdoorAPI implements JobSearch {
 		// http://api.glassdoor.com/api/api.htm?t.p=55571&t.k=dq1mX87IgI&v=1&userip=0.0.0.0
 		// &format=json&action=jobs&countryId=1&city=san+jose
 		// &employer=facebook&jobTitle=software+engineer+intern&p=1
+//		http://api.glassdoor.com/api/api.htm?t.p=55571&t.k=dq1mX87IgI&v=1&userip=0.0.0.0&format=json&action=jobs&countryId=1&city=san+jose&employer=facebook&jobTitle=software+engineer+intern&p=1
 		String query = String.format("t.p=%s&t.k=%s&v=1&userip=%s&format=%s&action=%s&countryId=1&p=%s",
 								partnerId, partnerKey, ipAddress, format, action, currentPage 
 								);
@@ -192,6 +193,7 @@ public class GlassdoorAPI implements JobSearch {
 							String jobId = String.valueOf(job.getInt("jobListingId"));
 							builder.setJobId(jobId);
 						}
+						
 						builder.setPlatform(this.platformString);
 						
 						if (!job.isNull("jobTitle")) {
@@ -210,6 +212,10 @@ public class GlassdoorAPI implements JobSearch {
 						}
 						if (!job.isNull("jobCategory")) {
 							builder.setCategory("glassdoor category " + String.valueOf(job.getInt("jobCategory")));
+						}
+						if (!job.isNull("descriptionFragment")) {
+							
+							builder.setDescription(job.getString("descriptionFragment"));
 						}
 						result.add(builder.build());
 					}
