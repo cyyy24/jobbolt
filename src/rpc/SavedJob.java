@@ -40,13 +40,15 @@ public class SavedJob extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
 		if(session == null) {
 			response.setStatus(403);
 			return;
 		}
 		
-		
+		if (session.getAttribute("user_id") == null) {
+			System.out.println("session has no user_id");
+		}
 		String userId = session.getAttribute("user_id").toString(); 
 		DBConnection conn = new DBConnectionFactory().getConnection();
 		JSONArray array = new JSONArray();
@@ -76,7 +78,7 @@ public class SavedJob extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		 
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
 		if(session == null) {
 			response.setStatus(403);
 			return;
