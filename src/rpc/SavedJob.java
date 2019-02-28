@@ -76,13 +76,8 @@ public class SavedJob extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		 
-<<<<<<< HEAD
 		HttpSession session = request.getSession(false);
 		if(session == null) {
-=======
-		HttpSession session = request.getSession();
-		if (session == null) {
->>>>>>> 570d4503a87617da588cbbd5e826ee978b3f5226
 			response.setStatus(403);
 			return;
 		}
