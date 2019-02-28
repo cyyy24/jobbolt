@@ -1,0 +1,16 @@
+.login {
+    background:#030303 url(./../images/FotoJet.png) no-repeat center 0;
+    background-size: 100vw;
+    width:100vw;
+    height:100vh;
+    text-align: center;
+}
+.login .login-form {
+    position: fixed;
+    bottom:0;
+    right:0;
+    left:0;
+    height:17vh;
+    background:#030303;
+    padding:30px 0 50px;
+}

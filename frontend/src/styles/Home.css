@@ -1,0 +1,65 @@
+
+.home .ant-tabs-bar {
+    background:#000;
+    padding:0 0 10px 197px;
+    color:#ddd;
+    font-size:1.2em;
+    margin:0;
+}
+.job-list {
+    background:#f9f9f9;
+    border-right: 1px solid #e8e8e8;
+}
+.job-list .ant-card {
+    background:#f4f4f4;
+}
+.job-list .ant-card-head {
+    border-top: 1px solid #e8e8e8;
+    border-bottom:0 none;
+}
+.job-list .ant-card-body {
+    padding:0 25px;
+}
+.c-name {
+    display: block;
+    font-weight: 400;
+    margin:0 15px;
+}
+.c-address {
+    display: block;
+    margin:0 15px;
+    font-size: 0.7em;
+}
+.c-platform {
+    display: block;
+    margin:0 15px;
+    font-size: 0.7em;
+}
+.heart {
+    color:#d01010;
+}
+.c-short {
+    margin-top:-10px;
+}
+.job-content {
+    box-shadow: 0px 0px 8px #ddd;
+    margin:15px 15px 15px 0;
+    padding:20px 25px;
+    height:95%;
+}
+.job-content header {
+    border-bottom: 1px solid #e8e8e8;
+}
+.job-content .c-address {
+    display: inline-block;
+}
+.c-info {
+    margin:20px 0;
+}
+.c-apply {
+    margin:10px 15px 0;
+}
+.btn-preference {
+    float:right;
+    margin:-40px 110px 0 0;
+}

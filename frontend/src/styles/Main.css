@@ -1,0 +1,18 @@
+.ant-btn-primary.mr20 {
+    margin-right:20px;
+}
+.ant-modal-content .ant-modal-header {
+    padding: 16px 24px;
+    background: #0874a5;
+}
+.ant-modal-header .ant-modal-title {
+    color: #fff;
+}
+.ant-modal-content .ant-modal-close{
+    color: #fff;
+}
+.topbar-right {
+    width:192px;
+    display:flex;
+    justify-content: space-between;
+}
