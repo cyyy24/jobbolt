@@ -29,6 +29,7 @@ public class MySQLConnection implements DBConnection {
 		}
 	}
 
+	
 	@Override
 	public void close() {
 		// TODO Auto-generated method stub
@@ -41,6 +42,7 @@ public class MySQLConnection implements DBConnection {
 		}
 	}
 
+	
 	@Override
 	public void setSaveJobs(String userId, List<String> jobIds) {
 		// TODO Auto-generated method stub
@@ -84,6 +86,7 @@ public class MySQLConnection implements DBConnection {
 
 	}
 
+	
 	@Override
 	public void unsetSaveJobs(String userId, List<String> jobIds) {
 		// TODO Auto-generated method stub
@@ -107,6 +110,7 @@ public class MySQLConnection implements DBConnection {
 
 	}
 
+	
 	@Override
 	public void setJobPending(String userId, List<String> jobIds) {
 		// TODO Auto-generated method stub
@@ -148,6 +152,7 @@ public class MySQLConnection implements DBConnection {
 
 	}
 
+	
 	@Override
 	public void setJobSubmitted(String userId, List<String> jobIds) {
 		// TODO Auto-generated method stub
@@ -156,7 +161,6 @@ public class MySQLConnection implements DBConnection {
 			return;
 		}
 		try {
-
 			String sql = "UPDATE history SET status = ? WHERE user_id = ? AND job_id = ?";
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, "Submitted");
@@ -168,9 +172,9 @@ public class MySQLConnection implements DBConnection {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 	}
 
+	
 	@Override
 	public Set<String> getSavedJobIds(String userId) {
 		// TODO Auto-generated method stub
@@ -199,6 +203,7 @@ public class MySQLConnection implements DBConnection {
 
 	}
 
+	
 	@Override
 	public Set<Job> getSavedJobs(String userId) {
 		// TODO Auto-generated method stub
@@ -239,6 +244,7 @@ public class MySQLConnection implements DBConnection {
 
 	}
 
+	
 	@Override
 	public Set<String> getAppliedJobIds(String userId) {
 		// TODO Auto-generated method stub
@@ -266,6 +272,7 @@ public class MySQLConnection implements DBConnection {
 		return appliedJobs;
 	}
 
+	
 	@Override
 	public Set<Job> getAppliedJobs(String userId) {
 		// TODO Auto-generated method stub
@@ -314,7 +321,8 @@ public class MySQLConnection implements DBConnection {
 	 * 
 	 * return jobs; }
 	 */
-
+	
+	
 	@Override
 	public String getFullname(String userId) {
 		if (conn == null) {
@@ -337,6 +345,7 @@ public class MySQLConnection implements DBConnection {
 		return name;
 	}
 
+	
 	@Override
 	public boolean verifyLogin(String userId, String password) {
 		// TODO Auto-generated method stub
@@ -360,6 +369,7 @@ public class MySQLConnection implements DBConnection {
 		return false;
 	}
 
+	
 	@Override
 	public boolean registerUser(String userId, String password, String email, String firstname, String lastname) {
 		if (conn == null) {
@@ -388,10 +398,7 @@ public class MySQLConnection implements DBConnection {
 		}
 		return false;
 	}
-
 	
-
-
 
 	@Override
 	public List<Job> searchJobs(String location, String keyword, String company) {
@@ -415,54 +422,92 @@ public class MySQLConnection implements DBConnection {
 	
 	
 	// prepared for the search function
-		@Override
-		public void saveJob(Job job) {
-			if (conn == null) {
-				System.out.println("DB connection failed");
-				return;
-			}
-			try {
-				String sql;
-				PreparedStatement ps;
-				// insert into table "jobs"
-				if (this.saveToTableJobs) {
-					sql = "INSERT IGNORE INTO jobs VALUES(?,?,?,?,?,?,?)";
-					ps = conn.prepareStatement(sql);
-					ps.setString(1, job.getJobId());
-					ps.setString(2, job.getPlatform());
-					ps.setString(3, job.getJobTitle());
-					ps.setString(4, job.getCompany());
-					ps.setString(5, job.getUrl());
-					ps.setString(6, job.getLocation());
-					ps.setString(7, job.getCategory());
-					ps.execute();
-				}
-				
-				if (this.saveToTableCategories) {
-					/*do this step is not decided,if recommendation need table of 
-					 * category, it need to be done
-					 * */
-					sql = "INSERT IGNORE INTO categories VALUES(?,?)";
-					ps = conn.prepareStatement(sql);
-					ps.setString(1, job.getJobId());
-					ps.setString(2, job.getJobTitle());
-					ps.execute();
-				}
-
-				
-				
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-
+	@Override
+	public void saveJob(Job job) {
+		if (conn == null) {
+			System.out.println("DB connection failed");
+			return;
 		}
+		try {
+			String sql;
+			PreparedStatement ps;
+			// insert into table "jobs"
+			if (this.saveToTableJobs) {
+				sql = "INSERT IGNORE INTO jobs VALUES(?,?,?,?,?,?,?)";
+				ps = conn.prepareStatement(sql);
+				ps.setString(1, job.getJobId());
+				ps.setString(2, job.getPlatform());
+				ps.setString(3, job.getJobTitle());
+				ps.setString(4, job.getCompany());
+				ps.setString(5, job.getUrl());
+				ps.setString(6, job.getLocation());
+				ps.setString(7, job.getCategory());
+				ps.execute();
+			}
+				
+			if (this.saveToTableCategories) {
+				/*do this step is not decided,if recommendation need table of 
+				 * category, it need to be done
+				 * */
+				sql = "INSERT IGNORE INTO categories VALUES(?,?)";
+				ps = conn.prepareStatement(sql);
+				ps.setString(1, job.getJobId());
+				ps.setString(2, job.getJobTitle());
+				ps.execute();
+			}			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 		
-		//for the use of recommendation
-		@Override
-		public Set<String> getJobTitle(String jobId) {
-			// TODO Auto-generated method stub
+	
+	// for the use of recommendation, get the job title of given a jobId.
+	@Override
+	public String getJobTitle(String jobId) {
+		if (conn == null) {
 			return null;
 		}
+		String jobTitle = "";
+		try {
+			String sql = "SELECT job_title from categories WHERE job_id = ? ";
+			PreparedStatement statement = conn.prepareStatement(sql);
+			statement.setString(1, jobId);
+			ResultSet rs = statement.executeQuery();
+			while (rs.next()) {
+				jobTitle = rs.getString("job_title");
+				
+			}
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}	
+		
+		return jobTitle;
+	}
+		
+	
+	@Override
+	public Set<String> getAllJobIds(String userId) {
+		if (conn == null) {
+			return new HashSet<>();
+		}
 
+		Set<String> allJobIds = new HashSet<>();
+		try {
+			String sql = "SELECT job_id FROM history WHERE user_id = ? AND (saved = ? OR status = ?)";
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setString(1, userId);
+			stmt.setBoolean(2, true);
+			stmt.setString(3, "Submitted");
+			ResultSet rs = stmt.executeQuery();
+			
+			while (rs.next()) {
+				String jobId = rs.getString("job_id");
+				allJobIds.add(jobId);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return allJobIds;
+	}
 
 }

@@ -9,7 +9,7 @@ public interface DBConnection {
 	//close the connection
 	public void close();
 	
-	//Insert the job user ask for save 
+	//insert the job user ask for save 
 	public void setSaveJobs(String userId, List<String> jobIds);
 	
 	//delete the job user has saved
@@ -33,14 +33,8 @@ public interface DBConnection {
 	//get the job(json file) user has applied
 	public Set<Job> getAppliedJobs(String userId);
 	
-	//through the job id, get the jobtitle
-	public Set<String> getJobTitle(String jobId);
-
 	//search jobs near the geolocation and jobtitle()
 	//public List<Job> searchJobs(double lat, double lon, String jobtitle);
-	
-	//save job into db
-	public void saveJob(Job job);
 	
 	//get full name of a user, for login get method
 	public String getFullname(String userId);
@@ -53,5 +47,14 @@ public interface DBConnection {
 
 	//search jobs use location , keyword(jobTitle), company
 	public List<Job> searchJobs(String location, String keyword, String company);
+	
+	//save job into db
+	public void saveJob(Job job);
+	
+	//get categories (job title) of a given job id
+	public String getJobTitle(String jobId);
+	
+	//get all job ids a user has either saved or submitted (for recommendation)
+	public Set<String> getAllJobIds(String userId);
 
 }
