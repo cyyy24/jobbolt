@@ -55,7 +55,7 @@ public class Register extends HttpServlet {
 			}else {
 				obj.put("status", "User Already Exists");
 			}
-			rpcHelper.writeJsonObject(response, obj);
+			rpcHelper.writeJsonObject(response, obj, request);
 			
 		}catch(Exception e) {
 			e.printStackTrace();

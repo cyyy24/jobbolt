@@ -60,7 +60,7 @@ public class AppliedJob extends HttpServlet {
 				array.put(obj);
 			}
 			
-			rpcHelper.writeJsonArray(response, array);
+			rpcHelper.writeJsonArray(response, array, request);
 			
 			
 		}catch(JSONException e) {
@@ -100,7 +100,7 @@ public class AppliedJob extends HttpServlet {
 	   		 connection.setJobSubmitted(userId, jobIds2);
 	   		 
 	   		 
-	   		 rpcHelper.writeJsonObject(response, new JSONObject().put("result", "SUCCESS"));
+	   		 rpcHelper.writeJsonObject(response, new JSONObject().put("result", "SUCCESS"), request);
 	   		 
 	   	 } catch (Exception e) {
 	   		 e.printStackTrace();

@@ -12,19 +12,20 @@ import org.json.JSONObject;
 
 public class rpcHelper {
 	// Writes a JSONArray to http response.
-		public static void writeJsonArray(HttpServletResponse response, JSONArray array) throws IOException{
+		public static void writeJsonArray(HttpServletResponse response, JSONArray array, HttpServletRequest request) throws IOException{
 			response.setContentType("application/json");
 			PrintWriter out = response.getWriter();
-			response.setHeader("Access-Control-Allow-Origin", "*");
-
+			response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
+			response.setHeader("Access-Control-Allow-Credentials", "true");
 			out.println(array);
 			out.close();
 		}
 
 	    // Writes a JSONObject to http response.
-		public static void writeJsonObject(HttpServletResponse response, JSONObject obj) throws IOException {		
+		public static void writeJsonObject(HttpServletResponse response, JSONObject obj, HttpServletRequest request) throws IOException {		
 			response.setContentType("application/json");
-			response.setHeader("Access-Control-Allow-Origin", "*");
+			response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
+			response.setHeader("Access-Control-Allow-Credentials", "true");
 			PrintWriter out = response.getWriter();
 			out.print(obj);
 			out.close();

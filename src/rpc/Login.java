@@ -46,7 +46,7 @@ public class Login extends HttpServlet {
 				response.setStatus(403);
 				obj.put("status", "Invalid Session");
 			}
-			rpcHelper.writeJsonObject(response, obj);
+			rpcHelper.writeJsonObject(response, obj, request);
 		}catch(Exception e) {
 			e.printStackTrace();
 		}finally {
@@ -75,7 +75,7 @@ public class Login extends HttpServlet {
 				response.setStatus(401);
 				obj.put("status", "User Doesn't Exist");
 			}
-			rpcHelper.writeJsonObject(response, obj);
+			rpcHelper.writeJsonObject(response, obj, request);
 		}catch(Exception e) {
 			e.printStackTrace();
 		}finally {

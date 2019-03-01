@@ -35,7 +35,7 @@ public class RecommendJobs extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
 		if (session == null) {
 			response.setStatus(403);
 			return;
@@ -50,7 +50,7 @@ public class RecommendJobs extends HttpServlet {
 			for (Job job : recommendedJobs) {
 				array.put(job.toJSONObject());
 			}
-			rpcHelper.writeJsonArray(response, array);
+			rpcHelper.writeJsonArray(response, array, request);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

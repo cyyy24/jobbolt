@@ -56,7 +56,7 @@ public class SearchJob extends HttpServlet {
 			array.put(item.toJSONObject());
 		}
 		
-		RpcUtil.writeJSONArray(response, array);
+		RpcUtil.writeJSONArray(response, array, request);
 	}
 
 	/**

@@ -61,7 +61,7 @@ public class SavedJob extends HttpServlet {
 				array.put(obj);
 			}
 			
-			rpcHelper.writeJsonArray(response, array);
+			rpcHelper.writeJsonArray(response, array, request);
 			
 		} catch(JSONException e) {
 			e.printStackTrace();
@@ -92,7 +92,7 @@ public class SavedJob extends HttpServlet {
 	   			 jobIds.add(array.getString(i));
 	   		 }
 	   		 connection.setSaveJobs(userId, jobIds);
-	   		 rpcHelper.writeJsonObject(response, new JSONObject().put("result", "SUCCESS"));
+	   		 rpcHelper.writeJsonObject(response, new JSONObject().put("result", "SUCCESS"), request);
 	   		 
 	   	 } catch (Exception e) {
 	   		 e.printStackTrace();
@@ -107,7 +107,7 @@ public class SavedJob extends HttpServlet {
 	 */
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
 		if (session == null) {
 			response.setStatus(403);
 			return;
@@ -124,7 +124,7 @@ public class SavedJob extends HttpServlet {
 	   			 jobIds.add(array.getString(i));
 	   		 }
 	   		 connection.unsetSaveJobs(userId, jobIds);
-	   		 rpcHelper.writeJsonObject(response, new JSONObject().put("result", "SUCCESS"));
+	   		 rpcHelper.writeJsonObject(response, new JSONObject().put("result", "SUCCESS"), request);
 	   		 
 	   	 } catch (Exception e) {
 	   		 e.printStackTrace();
