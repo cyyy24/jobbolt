@@ -231,8 +231,8 @@ public class MySQLConnection implements DBConnection {
 					builder.setCompany(rs.getString("company"));
 					builder.setUrl(rs.getString("url"));
 					builder.setLocation(rs.getString("location"));
-					builder.setCategory(rs.getString("Category"));
-
+					builder.setCategory(rs.getString("category"));
+					builder.setDescription(rs.getString("description"));
 					savedJobs.add(builder.build());
 				}
 			}
@@ -301,7 +301,7 @@ public class MySQLConnection implements DBConnection {
 					builder.setUrl(rs.getString("url"));
 					builder.setLocation(rs.getString("location"));
 					builder.setCategory(rs.getString("category"));
-
+					builder.setDescription(rs.getString("description"));
 					appliedJobs.add(builder.build());
 				}
 			}

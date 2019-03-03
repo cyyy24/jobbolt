@@ -92,6 +92,13 @@ public class SavedJob extends HttpServlet {
 	   			 jobIds.add(array.getString(i));
 	   		 }
 	   		 connection.setSaveJobs(userId, jobIds);
+	   		 
+	   		 JSONArray array2 = input.getJSONArray("unsaved");
+	   		 List<String> jobIds2 = new ArrayList<>();
+	   		 for(int i = 0; i < array2.length(); ++i) {
+	   			 jobIds2.add(array2.getString(i));
+	   		 }
+	   		 connection.unsetSaveJobs(userId, jobIds2);
 	   		 rpcHelper.writeJsonObject(response, new JSONObject().put("result", "SUCCESS"), request);
 	   		 
 	   	 } catch (Exception e) {
@@ -107,30 +114,7 @@ public class SavedJob extends HttpServlet {
 	 */
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		HttpSession session = request.getSession(false);
-		if (session == null) {
-			response.setStatus(403);
-			return;
-		}
-		 
 		
-		DBConnection connection = DBConnectionFactory.getConnection();
-	   	 try {
-	   		 JSONObject input = rpcHelper.readJSONObject(request);
-	   		 String userId = input.getString("user_id");
-	   		 JSONArray array = input.getJSONArray("saved");
-	   		 List<String> jobIds = new ArrayList<>();
-	   		 for(int i = 0; i < array.length(); ++i) {
-	   			 jobIds.add(array.getString(i));
-	   		 }
-	   		 connection.unsetSaveJobs(userId, jobIds);
-	   		 rpcHelper.writeJsonObject(response, new JSONObject().put("result", "SUCCESS"), request);
-	   		 
-	   	 } catch (Exception e) {
-	   		 e.printStackTrace();
-	   	 } finally {
-	   		 connection.close();
-	   	 }
 	}
 
 }
