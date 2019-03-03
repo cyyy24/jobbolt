@@ -3,8 +3,9 @@ package jobClient.IndeedAPI;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import entity.Item;
-import entity.Item.ItemBuilder;
+import entity.Job;
+import entity.Job.JobBuilder;
+
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -42,7 +43,7 @@ public class IndeedAPI implements JobSearch {
 	//private static String action = "jobs"; 
 	private static String useragent = "Mozilla/%2F4.0";
 	private int totalPageCount = Integer.MIN_VALUE;
-	private static String platformPrefix = "id_"; 
+	private static String platformPrefix = "id"; 
 	private static String companyRootUrl = "https://www.indeed.com";
 	
 	private String getIPAddress(String location) {
@@ -71,13 +72,13 @@ public class IndeedAPI implements JobSearch {
 	}
 	
 	@Override
-	public List<Item> search(String location, String keyword, String company) {
+	public List<Job> search(String location, String keyword, String company) {
 		
 		// keyword -> title
 		// location -> city
 		// company -> employer
 		
-		List<Item> result = new ArrayList<>();
+		List<Job> result = new ArrayList<>();
 		
 		// eliminate space
 		location = dropSpace(location);
@@ -144,7 +145,7 @@ public class IndeedAPI implements JobSearch {
 		return result;
 	}
 	
-	private void readItems(HttpURLConnection connection, List<Item> result) {
+	private void readItems(HttpURLConnection connection, List<Job> result) {
 		
 		try {
 			BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
@@ -173,7 +174,7 @@ public class IndeedAPI implements JobSearch {
 				if (!obj.isNull("results")) {	
 					JSONArray jobs = obj.getJSONArray("results");
 					for (int i = 0; i < jobs.length(); i++) {
-						ItemBuilder builder = new ItemBuilder();
+						JobBuilder builder = new JobBuilder();
 						JSONObject job = jobs.getJSONObject(i);
 						if (!job.isNull("jobkey")) {
 							String jobId = this.platformPrefix + String.valueOf(job.getString("jobkey"));
@@ -182,7 +183,7 @@ public class IndeedAPI implements JobSearch {
 						builder.setPlatform("indeed");
 						
 						if (!job.isNull("jobtitle")) {
-							builder.setTitle(job.getString("jobtitle"));
+							builder.setJobTitle(job.getString("jobtitle"));
 						}
 						if (!job.isNull("company")) {
 							String company = job.getString("company");
