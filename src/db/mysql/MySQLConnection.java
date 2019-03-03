@@ -419,6 +419,42 @@ public class MySQLConnection implements DBConnection {
 		
 		return results;
 	}
+//	
+//	public List<Job> searchJobs(String location, String keyword, String company, String platform) {
+//		
+//		if (platform == "glassdor") {
+//			GlassdoorAPI ga = new GlassdoorAPI();
+//			List<Job> results = ga.search(location, keyword, company);
+//			System.out.println("Searching!!! Found " + results.size() + " jobs!");
+//			for (Job job : results) {
+//				saveJob(job);
+//			}
+//			
+//			if (this.saveToTableJobs) {
+//				System.out.println("new records inserted into the table [jobs]");
+//			}
+//			if (this.saveToTableCategories) {
+//				System.out.println("new records inserted into the table [categories]");
+//			}
+//			
+//			return results;
+//		}
+//		IndeedAPI id = new IndeedAPI();
+//		List<Job> results = id.search(location, keyword, company);
+//		System.out.println("Searching!!! Found " + results.size() + " jobs!");
+//		for (Job job : results) {
+//			saveJob(job);
+//		}
+//		
+//		if (this.saveToTableJobs) {
+//			System.out.println("new records inserted into the table [jobs]");
+//		}
+//		if (this.saveToTableCategories) {
+//			System.out.println("new records inserted into the table [categories]");
+//		}
+//		
+//		return results;
+//	}
 	
 	
 	// prepared for the search function
